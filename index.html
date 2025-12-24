@@ -12,8 +12,10 @@
 body{
   font-family:'Nunito',sans-serif;
   background:#000;
-  overflow:hidden;
+  overflow-x:hidden;
+  overflow-y:auto;
 }
+
 
 /* ===== PAGE ===== */
 .page{
@@ -21,10 +23,13 @@ body{
   inset:0;
   display:none;
   justify-content:center;
-  align-items:center;
+  align-items:flex-start;
   text-align:center;
   color:white;
+  padding:40px 15px;
+  overflow-y:auto;
 }
+
 .page.active{display:flex}
 
 /* ===== BACKGROUND IMG ===== */
@@ -74,6 +79,7 @@ button:hover{transform:scale(1.05)}
   width:85%;
   max-width:480px;
   border-radius:12px;
+   margin:20px auto;
   box-shadow:0 20px 40px rgba(0,0,0,.4);
   animation:openLetter 1s ease;
 }
@@ -273,3 +279,4 @@ for(let i=0;i<60;i++){
 
 </body>
 </html>
+
