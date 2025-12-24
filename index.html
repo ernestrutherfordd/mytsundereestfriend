@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merry Christmas 🎄</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Nunito',sans-serif;
+  background:#000;
+  overflow:hidden;
+}
+
+/* ===== PAGE ===== */
+.page{
+  position:absolute;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:white;
+}
+.page.active{display:flex}
+
+/* ===== BACKGROUND IMG ===== */
+.bg-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+}
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:-1;
+}
+
+/* ===== BUTTON ===== */
+button{
+  padding:14px 28px;
+  border:none;
+  border-radius:30px;
+  background:#b11226;
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
+  transition:.3s;
+}
+button:hover{transform:scale(1.05)}
+
+/* ===== PAGE 1 ===== */
+.hero{
+  animation:fadeUp 1.4s ease;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:3rem;
+}
+.hero p{margin:20px 0}
+
+/* ===== LETTER ===== */
+.letter{
+  background:#e6c9a8;
+  color:#4b1b1b;
+  padding:40px;
+  width:85%;
+  max-width:480px;
+  border-radius:12px;
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
+  animation:openLetter 1s ease;
+}
+.letter h2{
+  font-family:'Playfair Display',serif;
+  color:#8b0000;
+}
+.letter p{
+  margin-top:15px;
+  line-height:1.8;
+}
+
+/* ===== FORTUNE ===== */
+.fortune-box{
+  background:rgba(255,255,255,.92);
+  color:#8b0000;
+  padding:35px;
+  border-radius:18px;
+  width:85%;
+  max-width:420px;
+  animation:fadeUp 1s ease;
+}
+.fortune-box h3{
+  font-family:'Playfair Display',serif;
+}
+.fortune-text{
+  margin:20px 0;
+  font-size:1.1rem;
+}
+
+/* ===== NAV ===== */
+.nav{
+  margin-top:20px;
+  display:flex;
+  gap:15px;
+  justify-content:center;
+}
+
+/* ===== SNOW ===== */
+.snow{
+  position:fixed;
+  top:-10px;
+  color:white;
+  animation:snowfall linear infinite;
+  opacity:.8;
+  pointer-events:none;
+}
+
+@keyframes snowfall{
+  to{transform:translateY(110vh)}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes openLetter{
+  from{transform:scale(.8);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 MUSIC (PLAY AFTER CLICK) -->
+<audio id="bgm" loop>
+  <source src="Wham! - Last Christmas (Lyrics).mp3" type="audio/mpeg">
+</audio>
+
+<!-- ===== PAGE 1 ===== -->
+<div class="page active" id="page1">
+  <img src="ca8b1a63-c73d-448c-b31a-cdf3a7808ba0.jpg" class="bg-img" alt="">
+  <div class="overlay"></div>
+  <div class="hero">
+    <h1>Merry Christmas, yuji!!!</h1>
+    <p>This gift is only for you</p>
+    <button onclick="openGift()">Open !</button>
+  </div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page" id="page2">
+  <img src="Itadori Yuji 🎄🎁☃️.jpeg" class="bg-img" alt="">
+  <div class="overlay"></div>
+  <div class="letter">
+    <h2>Dear yuji 🤍</h2>
+    <p>
+      merry christmas, yuji! <br><br>
+      i hope this christmas feels warm and comforting for you, the kind that makes everything slow down for a moment. semoga hari hari ke depan dipenuhi hal hal kecil yang sederhana tapi berarti, yang bikin hati yuji ngerasa tenang dan aman.
+
+thank you for being you, just the way you are. for your kindness, your presence, and the way you make things feel a little nicer without trying. i hope all the tired thoughts slowly fade, replaced with better days and softer feelings.
+
+may this season remind you that you are appreciated more than you know, and that good things are always finding their way to you. semoga akhir tahun ini ninggalin kenangan manis, dan awal yang baru datang dengan harapan yang lebih baik.
+
+merry christmas, yuji. take care of yourself and keep being your gentle self. <br><br>
+
+with warm thoughts,
+ernest 🤍✨
+    </p>
+    <div class="nav">
+      <button onclick="goPage(1)">Back</button>
+      <button onclick="goPage(3)">Next </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 3 ===== -->
+<div class="page" id="page3">
+  <img src="Snoopy Christmas Wallpapers.jpeg" class="bg-img" alt="">
+  <div class="overlay"></div>
+  <div class="fortune-box">
+    <h3>🎄 Christmas Fortune:3</h3>
+    <div class="fortune-text" id="fortune"></div>
+    <div class="nav">
+      <button onclick="newFortune()">Open Again 🍪</button>
+      <button onclick="goPage(2)">Back</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== MUSIC + PAGE CONTROL ===== */
+const bgm = document.getElementById("bgm");
+
+function openGift(){
+  goPage(2);
+  if(bgm.paused){
+    bgm.play().catch(()=>{});
+  }
+}
+
+function goPage(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+}
+
+/* ===== FORTUNE ===== */
+const fortunes=[
+"You will smile a lot this year 🤍",
+"Someone treasures you deeply",
+"Warm moments are waiting",
+"Peace will find you",
+"You are enough",
+"Kindness returns to you",
+"Soft days are coming",
+"You are appreciated",
+"Someone misses you",
+"Your heart will feel lighter",
+"Joy hides in small things",
+"Good news will surprise you",
+"You are loved quietly",
+"Luck walks beside you",
+"You bring warmth",
+"Your dreams matter",
+"You will laugh more",
+"You are never alone",
+"Calm nights await",
+"You deserve gentle love",
+"Hope stays with you",
+"You shine softly",
+"Your efforts matter",
+"Peace chooses you",
+"Warm hugs are coming",
+"You are safe",
+"Your story matters",
+"Joy follows you",
+"You will feel loved",
+"Light surrounds you",
+"You inspire someone",
+"Your heart is strong",
+"Good things grow slowly",
+"You are enough",
+"Magic exists tonight",
+"Kindness protects you",
+"Your smile heals",
+"Peace feels closer",
+"Love finds its way"
+];
+
+function newFortune(){
+  document.getElementById('fortune').innerText =
+    fortunes[Math.floor(Math.random()*fortunes.length)];
+}
+newFortune();
+
+/* ===== SNOW ===== */
+for(let i=0;i<60;i++){
+  const s=document.createElement('div');
+  s.className='snow';
+  s.innerText='❄';
+  s.style.left=Math.random()*100+'vw';
+  s.style.fontSize=10+Math.random()*20+'px';
+  s.style.animationDuration=5+Math.random()*10+'s';
+  document.body.appendChild(s);
+}
+</script>
+
+</body>
+</html>
